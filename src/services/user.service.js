@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt");
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 const AppError = require("../errors/AppError");
-const {json} = require("express");
+const config = require("../config/config");
 
 const registerUser = async user => {
 
@@ -22,7 +22,7 @@ const registerUser = async user => {
     role: registeredUser.role,
   }
 
-  const sign = jwt.sign(payload, process.env.JWT_SECRET_KEY);
+  const sign = jwt.sign(payload, config.jwtSecret);
   return {sign};
 
 }
@@ -46,7 +46,7 @@ const loginUser = async user => {
     role: registerUser.role,
   }
 
-  let token = await jwt.sign(payload, process.env.JWT_SECRET_KEY);
+  let token = await jwt.sign(payload, config.jwtSecret);
 
   return {token};
 

@@ -3,6 +3,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const errorHandler = require("./src/middlewares/global-error-handling.middleware");
+const config = require('./src/config/config');
 
 const {loggerMiddleware} = require('./src/middlewares/logger.middleware')
 const blogRouter = require('./src/routes/blog.router');
@@ -11,7 +12,7 @@ const userRouter = require('./src/routes/user.router');
 const app = express();
 
 const mongoose = require('mongoose');
-mongoose.connect(process.env.MONGODB_URI)
+mongoose.connect(config.mongodb)
   .then(() => console.log('MongoDB Connected'))
   .catch((err) => console.log(err));
 
