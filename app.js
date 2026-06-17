@@ -2,12 +2,18 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const {loggerMiddleware} = require('./src/middlewares/logger.middleware')
-
-const blogRouter = require('./src/routes/blog.router');
 const errorHandler = require("./src/middlewares/global-error-handling.middleware");
 
+const {loggerMiddleware} = require('./src/middlewares/logger.middleware')
+const blogRouter = require('./src/routes/blog.router');
+const userRouter = require('./src/routes/user.router');
+
 const app = express();
+
+const mongoose = require('mongoose');
+mongoose.connect(process.env.MONGODB_URI)
+  .then(() => console.log('MongoDB Connected'))
+  .catch((err) => console.log(err));
 
 app.use(loggerMiddleware);
 app.use(logger('dev'));
@@ -20,6 +26,9 @@ app.use('/blogs', blogRouter);
 app.use('/blogs', (req, res) => {
   res.send('Back in Main App');
 });
+
+app.use('/users', userRouter)
+
 
 app.use(errorHandler)
 

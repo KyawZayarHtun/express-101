@@ -18,7 +18,7 @@ const errorHandler = (err, req, res, next) => {
 
   res.status(err.statusCode).json({
     success: false,
-    message: message,
+    message: err,
     // Include stack trace only during local development
     stack: process.env.NODE_ENV === 'development' ? err.stack : undefined,
   });
