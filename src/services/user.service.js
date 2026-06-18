@@ -52,7 +52,14 @@ const loginUser = async user => {
 
 }
 
+const findByUsername = async (username) => {
+	return await User.findOne({
+		username
+	})
+}
+
 module.exports = {
   registerUser,
   loginUser,
+	findByUsername
 }
